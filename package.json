@@ -47,6 +47,7 @@
     "NOTICE"
   ],
   "scripts": {
+    "audit:all": "npm audit --registry=https://registry.npmjs.org",
     "audit:prod": "npm audit --omit=dev --registry=https://registry.npmjs.org",
     "build": "npm run build:web && npm run build:node",
     "build:web": "vite build",
@@ -70,7 +71,7 @@
     "test:fixtures": "npm run build && node scripts/verify-fixtures.mjs",
     "test:package": "npm run build && node scripts/package-smoke.mjs",
     "typecheck": "tsc --noEmit",
-    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test:unit && npm run test:integration && npm run test:coverage && npm run build && node scripts/verify-fixtures.mjs && node scripts/package-smoke.mjs && npm run audit:prod",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test:unit && npm run test:integration && npm run test:coverage && npm run build && node scripts/verify-fixtures.mjs && node scripts/package-smoke.mjs && npm run audit:all",
     "prepack": "npm run build"
   },
   "dependencies": {
@@ -110,5 +111,8 @@
     "typescript-eslint": "8.69.0",
     "vite": "8.2.2",
     "vitest": "4.1.11"
+  },
+  "overrides": {
+    "esbuild": "0.28.2"
   }
 }

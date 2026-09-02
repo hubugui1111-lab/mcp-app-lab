@@ -44,8 +44,8 @@ jobs:
         run: node scripts/verify-fixtures.mjs
       - name: Installed-package smoke test
         run: node scripts/package-smoke.mjs
-      - name: Production dependency audit
-        run: npm run audit:prod
+      - name: Dependency vulnerability audit
+        run: npm run audit:all
       - uses: actions/upload-artifact@v7.0.1
         with:
           name: mcp-app-lab-dist

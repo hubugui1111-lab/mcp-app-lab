@@ -63,6 +63,6 @@ Secret-like config keys are rejected, but key-name detection cannot recognize ev
 3. Keep the default link-deny policy until navigation is specifically under test.
 4. Use explicit CSP origins rather than broad wildcards.
 5. Review recordings and screenshots before attaching them to public issues.
-6. Run `npm run audit:prod`, CodeQL, and Gitleaks as part of release verification.
+6. Run `npm run audit:all`, CodeQL, and Gitleaks as part of release verification.
 
 Report vulnerabilities privately as described in [SECURITY.md](../SECURITY.md).

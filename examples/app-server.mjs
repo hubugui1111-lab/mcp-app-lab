@@ -61,6 +61,9 @@ const appHtml = `<!doctype html>
         if (message.id === 1 && message.result) {
           send({ jsonrpc: "2.0", method: "ui/notifications/initialized", params: {} });
           send({ jsonrpc: "2.0", method: "ui/notifications/size-changed", params: { width: 620, height: ${variant === "resize-overflow" ? "100000" : "430"} } });
+          ${variant === "schema-mismatch" ? 'request("tools/call", { name: "show-weather", arguments: { city: 42 } });' : ""}
+          ${variant === "unsafe-postmessage" ? 'send({ method: "ui/message", params: { text: "missing jsonrpc" } });' : ""}
+          ${variant === "unsupported-capability" ? 'request("ui/request-display-mode", { mode: "pip" });' : ""}
         }
         if (message.method === "ui/notifications/tool-input") {
           document.querySelector("#city").textContent = message.params.arguments?.city ?? "Unknown city";
@@ -77,7 +80,7 @@ const appHtml = `<!doctype html>
         method: "ui/initialize",
         params: {
           appInfo: { name: "weather-pulse-fixture", version: "0.1.0" },
-          appCapabilities: { availableDisplayModes: ["inline", "fullscreen"] },
+          appCapabilities: { availableDisplayModes: ${variant === "unsupported-capability" ? '["pip"]' : '["inline", "fullscreen"]'} },
           protocolVersion: "2026-01-26"
         }
       });

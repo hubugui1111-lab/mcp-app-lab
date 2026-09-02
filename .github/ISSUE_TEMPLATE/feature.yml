@@ -1,0 +1,33 @@
+name: Feature request
+description: Propose a focused App compatibility, trace, fixture, or replay improvement
+title: "feature: "
+labels: [enhancement, triage]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What concrete App debugging task is currently hard or impossible?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Protocol or implementation evidence
+      description: Link a specification section or public minimal example when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Proposed scope and boundary
+      description: Explain which layer owns this and what remains out of scope.
+    validations:
+      required: true
+  - type: textarea
+    id: regression
+    attributes:
+      label: Reproducible acceptance case
+      description: Describe the test or fixture that would prove the feature works.
+    validations:
+      required: true

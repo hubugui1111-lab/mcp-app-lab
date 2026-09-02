@@ -1,0 +1,8 @@
+{
+  "connection": {
+    "transport": "stdio",
+    "command": "node",
+    "args": ["examples/app-server.mjs", "--variant", "wrong-mime"],
+    "cwd": ".."
+  }
+}

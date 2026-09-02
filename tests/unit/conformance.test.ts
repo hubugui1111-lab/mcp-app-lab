@@ -210,4 +210,32 @@ describe("MCP Apps conformance", () => {
       ]),
     );
   });
+
+  it("reports incompatible tool schemas and unsupported permissions", () => {
+    const report = analyzeAppContract({
+      ...goodContract,
+      tools: [{ ...goodTool, inputSchema: { type: "string" } }],
+      reads: {
+        [APP_URI]: {
+          contents: [
+            {
+              ...goodResourceRead.contents[0]!,
+              _meta: {
+                ui: {
+                  permissions: { payments: {} },
+                },
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    expect(report.checks).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: "APP012", severity: "warning" }),
+        expect.objectContaining({ id: "APP013", severity: "error" }),
+      ]),
+    );
+  });
 });

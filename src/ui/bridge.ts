@@ -277,9 +277,19 @@ export async function mountAppBridge(options: {
       outcome: size.clamped ? "rejected" : "accepted",
     });
   };
-  bridge.onrequestdisplaymode = async ({ mode }) => {
+  bridge.onrequestdisplaymode = async ({
+    mode,
+  }: {
+    mode: "inline" | "fullscreen" | "pip";
+  }) => {
     const accepted = mode === "fullscreen" ? "fullscreen" : "inline";
     options.onDisplayMode(accepted);
+    recordBridgeEvent({
+      direction: "app-to-host",
+      method: "ui/request-display-mode:policy",
+      payload: { requested: mode, accepted },
+      outcome: mode === accepted ? "accepted" : "rejected",
+    });
     await bridge.sendHostContextChange({ displayMode: accepted });
     return { mode: accepted };
   };

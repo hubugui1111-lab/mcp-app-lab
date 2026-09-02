@@ -168,6 +168,32 @@ function inspectAppResource(
           "Add every external script, style, image, font, and media origin to resourceDomains.",
         ),
   );
+
+  const supportedPermissions = new Set([
+    "camera",
+    "microphone",
+    "geolocation",
+    "clipboardWrite",
+  ]);
+  const unsupportedPermissions = Object.keys(meta?.permissions ?? {}).filter(
+    (permission) => !supportedPermissions.has(permission),
+  );
+  checks.push(
+    unsupportedPermissions.length === 0
+      ? finding(
+          "APP012",
+          "pass",
+          "Requested capabilities are supported",
+          "none unsupported",
+        )
+      : finding(
+          "APP012",
+          "warning",
+          "App requests unsupported capabilities",
+          unsupportedPermissions.join(", "),
+          "Remove unsupported permissions or test them in a compatible host.",
+        ),
+  );
 }
 
 function inspectSandbox(
@@ -293,6 +319,26 @@ export function analyzeAppContract(input: AppContractInput): ConformanceReport {
             "Tool visibility is invalid",
             tool.name,
             'Use one or both of "model" and "app".',
+          ),
+    );
+
+    const inputType = tool.inputSchema.type;
+    const inputSchemaIsObject = inputType === "object";
+    const inputTypeLabel =
+      typeof inputType === "string"
+        ? inputType
+        : inputType === undefined
+          ? "no type"
+          : JSON.stringify(inputType);
+    checks.push(
+      inputSchemaIsObject
+        ? finding("APP013", "pass", "Tool input schema is an object", tool.name)
+        : finding(
+            "APP013",
+            "error",
+            "Tool input schema is incompatible",
+            `${tool.name} declares ${inputTypeLabel}`,
+            'Declare a JSON Schema object with type: "object".',
           ),
     );
   }

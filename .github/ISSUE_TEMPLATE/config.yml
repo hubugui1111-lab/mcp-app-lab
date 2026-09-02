@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private security report
+    url: https://github.com/hubugui1111-lab/mcp-app-lab/security/advisories/new
+    about: Report a suspected vulnerability privately.
+  - name: MCP Apps specification
+    url: https://github.com/modelcontextprotocol/ext-apps
+    about: Check whether the behavior belongs to the upstream Apps specification.

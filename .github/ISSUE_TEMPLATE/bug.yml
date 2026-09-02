@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a reproducible MCP App Lab defect (not a vulnerability)
+title: "bug: "
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for providing a minimal, sanitized reproduction. Report security issues privately through the Security tab.
+  - type: input
+    id: version
+    attributes:
+      label: MCP App Lab version or commit
+      placeholder: v0.1.0 or commit SHA
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Windows 11, Node 24.15, Chromium 140, stdio
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Use a credential-free fixture or public server and list exact commands.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and sanitized evidence
+      description: Include finding IDs, trace methods, or screenshots. Review recordings before attaching them.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety checks
+      options:
+        - label: This report contains no live credentials or private data.
+          required: true
+        - label: This is not an undisclosed security vulnerability.
+          required: true

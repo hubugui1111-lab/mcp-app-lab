@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Formatting
+        run: npm run format:check
+      - name: Lint
+        run: npm run lint
+      - name: Strict type check
+        run: npm run typecheck
+      - name: Unit and UI tests
+        run: npm run test:unit
+      - name: Integration and CLI tests
+        run: npm run test:integration
+      - name: Full suite and coverage gate
+        run: npm run test:coverage
+      - name: Production builds
+        run: npm run build
+      - name: Adversarial fixture contracts
+        run: node scripts/verify-fixtures.mjs
+      - name: Installed-package smoke test
+        run: node scripts/package-smoke.mjs
+      - name: Production dependency audit
+        run: npm run audit:prod
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: mcp-app-lab-dist
+          path: dist/
+          if-no-files-found: error
+
+  browser:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install chromium
+      - name: Build web and CLI
+        run: npm run build
+      - name: Chromium interaction and visual regressions
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v7.0.1
+        if: always()
+        with:
+          name: playwright-report-windows
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore

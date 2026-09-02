@@ -1,0 +1,11 @@
+{
+  "connection": {
+    "transport": "http",
+    "url": "http://127.0.0.1:3210/mcp"
+  },
+  "protocolMode": "auto",
+  "policy": {
+    "openLinks": "deny",
+    "maxFrameHeight": 900
+  }
+}

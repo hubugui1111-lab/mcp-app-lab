@@ -1,0 +1,12 @@
+{
+  "connection": {
+    "transport": "stdio",
+    "command": "node",
+    "args": ["examples/app-server.mjs", "--variant", "good"]
+  },
+  "protocolMode": "auto",
+  "policy": {
+    "openLinks": "deny",
+    "maxFrameHeight": 900
+  }
+}

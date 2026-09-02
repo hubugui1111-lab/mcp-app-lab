@@ -1,0 +1,10 @@
+{
+  "connection": {
+    "transport": "stdio",
+    "command": "node",
+    "args": ["server.mjs"],
+    "env": {
+      "GITHUB_TOKEN": "live-secret-must-never-be-accepted"
+    }
+  }
+}

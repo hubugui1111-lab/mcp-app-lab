@@ -9,7 +9,9 @@
 
 [English](README.md) · [夹具说明](docs/fixtures.md) · [安全模型](docs/security-model.md) · [v0.1.1 发布说明](docs/release-notes-v0.1.1.md)
 
-![MCP App Lab 在保持 App 和协议轨迹可见的同时，标出错误的 MCP Apps MIME 类型](assets/demo.png)
+[![观看 58 秒 MCP App Lab 中文旁白演示](assets/promo-cover.png)](https://github.com/hubugui1111-lab/mcp-app-lab/releases/download/v0.1.1/mcp-app-lab-demo.mp4)
+
+[观看 58 秒双语字幕演示](https://github.com/hubugui1111-lab/mcp-app-lab/releases/download/v0.1.1/mcp-app-lab-demo.mp4) · [查看完整故障截图](assets/demo.png)
 
 MCP App Lab 是一个面向 [MCP Apps](https://github.com/modelcontextprotocol/ext-apps) 的本地开发工作台。它连接真实 MCP Server，通过双源双 iframe 渲染 App，解释一致性失败，记录 MCP 与桥接消息，并把已知坏例子变成可重复的 CLI 和浏览器回归测试。
 
@@ -128,6 +130,16 @@ README 图片不是设计稿，可从浏览器测试重复生成：
 npm run test:e2e:update
 npm run demo:assets
 ```
+
+旁白演示视频也可以重复生成。脚本会先发现实际控件，要求完整无录像彩排通过，再用 Playwright 录制正常/故障夹具，最后通过 FFmpeg 输出 MP4：
+
+```bash
+npm run demo:video:discover
+npm run demo:video:rehearse
+npm run demo:video
+```
+
+Windows 会在检测到中文 System.Speech 语音时自动混入旁白；其他平台仍会保留烧录的双语字幕，并生成静音音轨。
 
 ## 当前边界
 

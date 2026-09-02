@@ -9,7 +9,9 @@
 
 [简体中文](README.zh-CN.md) · [Fixture gallery](docs/fixtures.md) · [Security model](docs/security-model.md) · [v0.1.1 notes](docs/release-notes-v0.1.1.md)
 
-![MCP App Lab flags an incorrect MCP Apps MIME type while keeping the App and protocol trace visible](assets/demo.png)
+[![Watch the 58-second narrated MCP App Lab demo](assets/promo-cover.png)](https://github.com/hubugui1111-lab/mcp-app-lab/releases/download/v0.1.1/mcp-app-lab-demo.mp4)
+
+[Watch the 58-second bilingual demo](https://github.com/hubugui1111-lab/mcp-app-lab/releases/download/v0.1.1/mcp-app-lab-demo.mp4) · [View the full failure screenshot](assets/demo.png)
 
 MCP App Lab is a focused local workbench for [MCP Apps](https://github.com/modelcontextprotocol/ext-apps). It connects to a real MCP server, renders its App through a two-origin double iframe, explains conformance failures, records MCP and bridge traffic, and turns known-bad Apps into repeatable CLI and browser regressions.
 
@@ -130,6 +132,16 @@ The launch images are not mockups. Regenerate them from the browser suite with:
 npm run test:e2e:update
 npm run demo:assets
 ```
+
+The narrated launch video is reproducible too. It discovers the live controls, requires a complete no-recording rehearsal, records the real good/bad fixtures with Playwright, and uses FFmpeg for the final MP4:
+
+```bash
+npm run demo:video:discover
+npm run demo:video:rehearse
+npm run demo:video
+```
+
+On Windows, an installed Chinese System.Speech voice is mixed into the video. Other platforms keep the burned-in bilingual captions and produce a silent audio track.
 
 ## Scope and limitations
 

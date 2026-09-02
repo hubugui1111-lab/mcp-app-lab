@@ -18,6 +18,8 @@ GitHub description (under 160 characters):
 
 ## Evidence to lead with
 
+- `assets/promo-cover.png`: the 1146×716 cover for the 58-second narrated launch video.
+- `mcp-app-lab-demo.mp4`: a 1920×1080 H.264/AAC recording of the real bad-to-good workflow, published with the v0.1.1 GitHub release.
 - `assets/demo.png`: an intentional MIME failure, with the App, `APP003` verdict, and protocol trace visible together.
 - `assets/workbench.png`: successful tool interaction through the real double-iframe path.
 - `npm run demo`: reproducible local demo using a real stdio MCP server.
@@ -25,6 +27,44 @@ GitHub description (under 160 characters):
 - `npm run test:e2e`: Chromium interaction and visual gate.
 
 Do not claim production-grade isolation, official certification, universal client compatibility, or npm availability unless those facts are independently true at publication time.
+
+## Video package
+
+The launch video is 58 seconds, uses the real local fixtures, includes a visible cursor, bilingual burned-in captions, and an original synthesized Chinese narration. It contains no third-party music or stock footage.
+
+Windows uses an installed Chinese System.Speech voice; other platforms retain the captions and receive a silent audio track.
+
+Regenerate it only after the discovery and rehearsal gates pass:
+
+```bash
+npm run demo:video:discover
+npm run demo:video:rehearse
+npm run demo:video
+```
+
+### Bilibili
+
+Title:
+
+> MCP App 能跑≠没问题：我做了个兼容性与沙箱测试实验室
+
+Description:
+
+> 一个 MCP Server 能正常调用工具，不代表它的交互式 App 在 Host 中就是兼容且安全的。
+>
+> MCP App Lab 会连接真实的 stdio / Streamable HTTP Server，把 App 放进双源双 iframe 沙箱，并在同一个工作台展示调用结果、13 项确定性检查与完整协议轨迹。视频里的 APP003 是一个真实故障夹具：页面仍能显示，但 MIME 已违反 MCP Apps 约定。
+>
+> 项目地址：https://github.com/hubugui1111-lab/mcp-app-lab
+>
+> 最小运行：`git clone` 后执行 `npm ci && npm run demo`。
+>
+> 当前版本 v0.1.1，MIT 开源。这是独立开发者工具，不是官方 MCP 认证套件。
+
+Tags: `MCP` · `开源` · `开发者工具` · `TypeScript` · `AI编程`
+
+Pinned comment:
+
+> 项目和完整复现步骤：https://github.com/hubugui1111-lab/mcp-app-lab 。如果你正在开发公开的 MCP App，欢迎带上具体 Server/版本和可复现现象提 Issue；最想收集的是“普通 MCP Inspector 看不明显，但进入 App Host 后才出现”的问题。
 
 ## GitHub release copy
 

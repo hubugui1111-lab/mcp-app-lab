@@ -4,6 +4,10 @@ All notable changes to MCP App Lab are documented here. The project follows [Sem
 
 ## [Unreleased]
 
+### Added
+
+- Reproducible Playwright promo-video discovery, rehearsal, recording, cover, bilingual caption, and FFmpeg export workflow.
+
 ## [0.1.1] - 2026-09-03
 
 ### Security

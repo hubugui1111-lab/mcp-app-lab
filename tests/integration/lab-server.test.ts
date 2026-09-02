@@ -92,4 +92,27 @@ describe("dual-origin Lab server", () => {
     expect(missing.status).toBe(404);
     expect(await missing.text()).toBe("Sandbox assets only");
   });
+
+  it("rate-limits repeated host and sandbox file reads", async () => {
+    const server = await startLabServer({
+      controller: controller(),
+      port: 0,
+      sandboxPort: 0,
+      webRoot: await webRoot(),
+      requestLimit: 2,
+    });
+    closeServers.push(server.close);
+
+    expect((await fetch(server.hostUrl)).status).toBe(200);
+    expect((await fetch(server.hostUrl)).status).toBe(200);
+    const blockedHost = await fetch(server.hostUrl);
+    expect(blockedHost.status).toBe(429);
+    expect(blockedHost.headers.get("ratelimit")).toBeTruthy();
+
+    expect((await fetch(server.sandboxUrl)).status).toBe(200);
+    expect((await fetch(server.sandboxUrl)).status).toBe(200);
+    const blockedSandbox = await fetch(server.sandboxUrl);
+    expect(blockedSandbox.status).toBe(429);
+    expect(blockedSandbox.headers.get("ratelimit")).toBeTruthy();
+  });
 });

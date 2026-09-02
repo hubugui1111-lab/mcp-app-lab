@@ -87,7 +87,7 @@ export const goodSession = {
       resourceUri: APP_URI,
       html: GOOD_HTML,
       mimeType: APP_MIME,
-      meta: goodResourceRead.contents[0]._meta.ui,
+      meta: goodResourceRead.contents[0]!._meta.ui,
     },
   ],
   findings: [

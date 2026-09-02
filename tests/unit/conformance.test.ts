@@ -64,7 +64,7 @@ describe("MCP Apps conformance", () => {
       reads: {
         [APP_URI]: {
           contents: [
-            { ...goodResourceRead.contents[0], mimeType: "text/html" },
+            { ...goodResourceRead.contents[0]!, mimeType: "text/html" },
           ],
         },
       },
@@ -103,7 +103,7 @@ describe("MCP Apps conformance", () => {
 
   it("prefers read-content UI metadata over listing metadata", () => {
     const resolved = resolveResourceUiMeta(goodResourceListing, {
-      ...goodResourceRead.contents[0],
+      ...goodResourceRead.contents[0]!,
       _meta: { ui: { prefersBorder: false } },
     });
 
@@ -117,7 +117,7 @@ describe("MCP Apps conformance", () => {
         [APP_URI]: {
           contents: [
             {
-              ...goodResourceRead.contents[0],
+              ...goodResourceRead.contents[0]!,
               text: GOOD_HTML.replace(
                 "</head>",
                 '<script src="https://evil.example/script.js"></script></head>',
@@ -144,6 +144,70 @@ describe("MCP Apps conformance", () => {
 
     expect(report.checks).toContainEqual(
       expect.objectContaining({ id: "APP008", severity: "error" }),
+    );
+  });
+
+  it("accepts base64 HTML and diagnoses invalid HTML and visibility", () => {
+    const blobReport = analyzeAppContract({
+      ...goodContract,
+      reads: {
+        [APP_URI]: {
+          contents: [
+            {
+              uri: APP_URI,
+              mimeType: APP_MIME_TYPE,
+              blob: Buffer.from(GOOD_HTML).toString("base64"),
+            },
+          ],
+        },
+      },
+    });
+    expect(blobReport.checks).toContainEqual(
+      expect.objectContaining({ id: "APP004", severity: "pass" }),
+    );
+
+    const brokenReport = analyzeAppContract({
+      ...goodContract,
+      tools: [
+        {
+          ...goodTool,
+          _meta: { ui: { resourceUri: APP_URI, visibility: ["secret"] } },
+        },
+      ],
+      reads: {
+        [APP_URI]: {
+          contents: [
+            {
+              uri: APP_URI,
+              mimeType: APP_MIME_TYPE,
+              text: "<main>fragment only</main>",
+            },
+          ],
+        },
+      },
+    });
+    expect(brokenReport.checks).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: "APP005", severity: "error" }),
+        expect.objectContaining({ id: "APP011", severity: "error" }),
+      ]),
+    );
+  });
+
+  it("flags missing sandbox capabilities and escape tokens", () => {
+    const report = analyzeAppContract({
+      ...goodContract,
+      sandbox: {
+        ...goodContract.sandbox,
+        sandboxTokens: ["allow-top-navigation"],
+      },
+    });
+
+    expect(report.checks).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: "APP009", severity: "error" }),
+        expect.objectContaining({ id: "APP010", severity: "error" }),
+      ]),
     );
   });
 });

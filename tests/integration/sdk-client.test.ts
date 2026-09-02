@@ -65,6 +65,7 @@ describe("SDK-backed MCP connections", () => {
     );
 
     await client.connect();
+    await client.connect();
     try {
       const tools = await client.listTools();
       const resources = await client.listResources();
@@ -81,6 +82,7 @@ describe("SDK-backed MCP connections", () => {
       });
       expect(client.getProtocolInfo().era).toMatch(/legacy|modern/u);
     } finally {
+      await client.close();
       await client.close();
     }
   }, 20_000);
@@ -105,4 +107,25 @@ describe("SDK-backed MCP connections", () => {
       await client.close();
     }
   }, 20_000);
+
+  it("reports stable fallback metadata before connecting", async () => {
+    const client = createSdkLabClient(
+      {
+        transport: "stdio",
+        command: process.execPath,
+        args: [fixtureServer],
+      },
+      { protocolMode: "modern" },
+    );
+
+    expect(client.getServerInfo()).toEqual({
+      name: "anonymous-mcp-server",
+      version: "unknown",
+    });
+    expect(client.getProtocolInfo()).toEqual({
+      era: "unknown",
+      version: "unknown",
+    });
+    await client.close();
+  });
 });

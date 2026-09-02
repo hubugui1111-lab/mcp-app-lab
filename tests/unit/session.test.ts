@@ -23,7 +23,10 @@ function fakeClient(): LabClient {
       content: [{ type: "text", text: "18 C" }],
     })),
     getServerInfo: vi.fn(() => ({ name: "fixture", version: "0.1.0" })),
-    getProtocolInfo: vi.fn(() => ({ era: "legacy", version: "2025-11-25" })),
+    getProtocolInfo: vi.fn(() => ({
+      era: "legacy" as const,
+      version: "2025-11-25",
+    })),
   };
 }
 

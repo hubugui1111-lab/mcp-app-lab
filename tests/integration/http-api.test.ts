@@ -68,4 +68,100 @@ describe("local Lab HTTP API", () => {
       arguments: { city: "Changchun" },
     });
   });
+
+  it("validates and forwards resource reads and bridge events", async () => {
+    const readResource = vi.fn(() =>
+      Promise.resolve({ contents: [{ uri: "ui://fixture", text: "ok" }] }),
+    );
+    const recordBridgeEvent = vi.fn();
+    const app = createLabHttpApp({
+      session: goodSession,
+      callTool: vi.fn(() => Promise.resolve({ content: [] })),
+      readResource,
+      recordBridgeEvent,
+    });
+
+    await request(app).post("/api/resources/read").send({ uri: 7 }).expect(400);
+    await request(app)
+      .post("/api/resources/read")
+      .send({ uri: "ui://fixture" })
+      .expect(200);
+    expect(readResource).toHaveBeenCalledWith({ uri: "ui://fixture" });
+
+    await request(app)
+      .post("/api/bridge-events")
+      .send({ direction: "outside", method: "bad", payload: {} })
+      .expect(400);
+    await request(app)
+      .post("/api/bridge-events")
+      .send({
+        direction: "app-to-host",
+        method: "ui/message",
+        payload: { text: "hello" },
+        correlationId: "bridge-1",
+        outcome: "accepted",
+      })
+      .expect(202, { accepted: true });
+    expect(recordBridgeEvent).toHaveBeenCalledWith(
+      expect.objectContaining({ method: "ui/message" }),
+    );
+  });
+
+  it("exports recordings when available and reports when unavailable", async () => {
+    const base = {
+      session: goodSession,
+      callTool: vi.fn(() => Promise.resolve({ content: [] })),
+      readResource: vi.fn(() => Promise.resolve({ contents: [] })),
+      recordBridgeEvent: vi.fn(),
+    };
+    const unavailable = createLabHttpApp(base);
+    await request(unavailable)
+      .get("/api/recording")
+      .expect(404, { error: "recording_unavailable" });
+
+    const available = createLabHttpApp({
+      ...base,
+      getRecording: () => ({
+        schemaVersion: "1.0",
+        recordingId: "rec_http",
+        createdAt: "2026-09-02T00:00:00.000Z",
+        coreProtocolVersion: "2025-11-25",
+        appsProtocolVersion: "2026-01-26",
+        server: goodSession.server,
+        connection: goodSession.connection,
+        trace: [],
+      }),
+    });
+    const exported = await request(available).get("/api/recording").expect(200);
+    expect(exported.headers["content-disposition"]).toContain(
+      "mcp-app-lab-recording.json",
+    );
+    expect(exported.body.recordingId).toBe("rec_http");
+  });
+
+  it("turns controller failures into stable server errors", async () => {
+    const app = createLabHttpApp({
+      session: goodSession,
+      callTool: vi.fn(() => Promise.reject(new Error("fixture exploded"))),
+      readResource: vi.fn(() =>
+        Promise.reject(new Error("resource unavailable")),
+      ),
+      recordBridgeEvent: vi.fn(),
+    });
+
+    await request(app)
+      .post("/api/tools/call")
+      .send({ name: "show-weather" })
+      .expect(500, {
+        error: "lab_operation_failed",
+        message: "fixture exploded",
+      });
+    await request(app)
+      .post("/api/resources/read")
+      .send({ uri: "ui://fixture" })
+      .expect(500, {
+        error: "lab_operation_failed",
+        message: "resource unavailable",
+      });
+  });
 });

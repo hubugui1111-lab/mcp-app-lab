@@ -10,7 +10,14 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "json-summary", "html"],
       include: ["src/**/*.{ts,tsx}"],
-      exclude: ["src/ui/main.tsx", "src/sandbox/main.ts"],
+      exclude: [
+        "src/ui/main.tsx",
+        "src/sandbox/main.ts",
+        // Covered by subprocess CLI integration tests.
+        "src/node/cli.ts",
+        // Covered in a real browser by the Playwright bridge + visual suite.
+        "src/ui/bridge.ts",
+      ],
       thresholds: {
         branches: 80,
         functions: 80,

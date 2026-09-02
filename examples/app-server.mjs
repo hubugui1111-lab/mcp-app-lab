@@ -88,7 +88,7 @@ const appHtml = `<!doctype html>
 
 function createServer() {
   const server = new McpServer({
-    name: `mcp-app-lab-${variant}`,
+    name: variant === "good" ? "weather-fixture" : `weather-fixture-${variant}`,
     version: "0.1.0",
   });
 

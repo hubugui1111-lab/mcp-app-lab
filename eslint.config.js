@@ -13,8 +13,10 @@ export default tseslint.config(
     ],
   },
   eslint.configs.recommended,
-  ...tseslint.configs.strictTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
+  ...tseslint.configs.recommendedTypeChecked.map((config) => ({
+    ...config,
+    files: ["**/*.{ts,tsx}"],
+  })),
   {
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
@@ -29,10 +31,27 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/no-confusing-void-expression": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_" },
+      ],
+    },
+  },
+  {
+    files: ["tests/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/require-await": "off",
+      "@typescript-eslint/unbound-method": "off",
     },
   },
   {
     files: ["**/*.js", "**/*.mjs"],
-    languageOptions: { globals: { ...globals.node, ...globals.browser } },
+    ...tseslint.configs.disableTypeChecked,
+    languageOptions: {
+      ...tseslint.configs.disableTypeChecked.languageOptions,
+      globals: { ...globals.node, ...globals.browser },
+    },
   },
 );

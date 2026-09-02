@@ -8,7 +8,9 @@ test("renders, exercises, traces, and screenshots the fixture App", async ({
   await expect(
     page.getByRole("heading", { name: "MCP App Lab" }),
   ).toBeVisible();
-  await expect(page.getByText("weather-fixture")).toBeVisible();
+  await expect(
+    page.getByRole("banner").getByText("weather-fixture"),
+  ).toBeVisible();
   await page.getByLabel("Tool arguments").fill('{"city":"Changchun"}');
   await page.getByRole("button", { name: "Run tool" }).click();
 

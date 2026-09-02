@@ -19,7 +19,7 @@ import type {
   ToolDefinition,
 } from "../core/types.js";
 
-const IMPLEMENTATION = { name: "mcp-app-lab", version: "0.1.0" };
+const IMPLEMENTATION = { name: "mcp-app-lab", version: "0.1.1" };
 
 function negotiationMode(mode: ProtocolMode): VersionNegotiationMode {
   return mode === "modern" ? { pin: CORE_SPEC_VERSION } : mode;

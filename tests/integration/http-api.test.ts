@@ -17,7 +17,7 @@ describe("local Lab HTTP API", () => {
 
     await request(app)
       .get("/api/health")
-      .expect(200, { status: "ok", version: "0.1.0" });
+      .expect(200, { status: "ok", version: "0.1.1" });
     const response = await request(app).get("/api/session").expect(200);
     expect(response.body.server).toEqual(goodSession.server);
     expect(JSON.stringify(response.body)).not.toMatch(

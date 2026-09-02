@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-38d9a9.svg)](LICENSE)
 [![Node.js 22.19+](https://img.shields.io/badge/node-%3E%3D22.19-5fa04e.svg)](package.json)
 
-[简体中文](README.zh-CN.md) · [Fixture gallery](docs/fixtures.md) · [Security model](docs/security-model.md) · [v0.1.0 notes](docs/release-notes-v0.1.0.md)
+[简体中文](README.zh-CN.md) · [Fixture gallery](docs/fixtures.md) · [Security model](docs/security-model.md) · [v0.1.1 notes](docs/release-notes-v0.1.1.md)
 
 ![MCP App Lab flags an incorrect MCP Apps MIME type while keeping the App and protocol trace visible](assets/demo.png)
 
@@ -134,7 +134,7 @@ npm run demo:assets
 ## Scope and limitations
 
 - This is an independent developer tool, not an official MCP certification suite.
-- v0.1.0 supports stdio and Streamable HTTP. It does not implement legacy standalone SSE transport or OAuth flows.
+- v0.1.x supports stdio and Streamable HTTP. It does not implement legacy standalone SSE transport or OAuth flows.
 - Sampling, elicitation, and unadvertised host capabilities are intentionally unavailable.
 - Replay matches exact recorded App requests and returns saved responses; it does not reconnect to or simulate arbitrary server state.
 - Runtime-only policy fixtures need a browser interaction to produce their trace event; the headless fixture gate verifies that each server still connects and its static verdict remains expected.
@@ -142,10 +142,11 @@ npm run demo:assets
 
 ## Project status
 
-`v0.1.0` is the first public MVP. The wire formats and public Node exports may evolve before `v1.0.0`; recording schema `1.0` is validated on load and versioned independently.
+`v0.1.1` is the current public MVP. The wire formats and public Node exports may evolve before `v1.0.0`; recording schema `1.0` is validated on load and versioned independently.
 
 - [Changelog](CHANGELOG.md)
-- [Release notes](docs/release-notes-v0.1.0.md)
+- [v0.1.1 release notes](docs/release-notes-v0.1.1.md)
+- [v0.1.0 release notes](docs/release-notes-v0.1.0.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 - [Launch kit](docs/launch-kit.md)

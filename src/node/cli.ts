@@ -16,7 +16,7 @@ import {
 import { startLabServer } from "./lab-server.js";
 import { createSdkLabClient } from "./sdk-client.js";
 
-const VERSION = "0.1.0";
+const VERSION = "0.1.1";
 
 function printHumanReport(server: string, findings: Finding[]): void {
   const errors = findings.filter(

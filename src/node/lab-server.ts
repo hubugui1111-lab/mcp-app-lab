@@ -3,6 +3,7 @@ import { type Server } from "node:http";
 import { resolve } from "node:path";
 
 import express from "express";
+import { rateLimit } from "express-rate-limit";
 
 import { buildSandboxCsp } from "../core/security.js";
 import type { UiCsp } from "../core/types.js";
@@ -69,10 +70,20 @@ export async function startLabServer(options: {
   port?: number;
   sandboxPort?: number;
   webRoot?: string;
+  requestLimit?: number;
 }): Promise<StartedLabServer> {
   const host = options.host ?? "127.0.0.1";
   const webRoot = options.webRoot ?? findWebRoot();
+  const requestLimit = options.requestLimit ?? 600;
   const hostApp = createLabHttpApp(options.controller);
+  hostApp.use(
+    rateLimit({
+      windowMs: 60_000,
+      limit: requestLimit,
+      standardHeaders: "draft-8",
+      legacyHeaders: false,
+    }),
+  );
   hostApp.use(
     "/assets",
     express.static(resolve(webRoot, "assets"), {
@@ -90,6 +101,14 @@ export async function startLabServer(options: {
 
   const sandboxApp = express();
   sandboxApp.disable("x-powered-by");
+  sandboxApp.use(
+    rateLimit({
+      windowMs: 60_000,
+      limit: requestLimit,
+      standardHeaders: "draft-8",
+      legacyHeaders: false,
+    }),
+  );
   sandboxApp.use(
     "/assets",
     express.static(resolve(webRoot, "assets"), {

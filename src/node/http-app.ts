@@ -47,7 +47,7 @@ export function createLabHttpApp(controller: LabController): Express {
   });
 
   app.get("/api/health", (_request, response) => {
-    response.json({ status: "ok", version: "0.1.0" });
+    response.json({ status: "ok", version: "0.1.1" });
   });
   app.get("/api/session", (_request, response) => {
     response.json(redactValue(controller.session));

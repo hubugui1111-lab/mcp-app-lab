@@ -1,6 +1,6 @@
 {
   "name": "mcp-app-lab",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A focused MCP Apps host, trace recorder, conformance lab, and visual regression harness.",
   "type": "module",
   "license": "MIT",
@@ -82,6 +82,7 @@
     "ajv-formats": "3.0.1",
     "commander": "15.0.0",
     "express": "5.2.1",
+    "express-rate-limit": "8.7.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "zod": "4.5.4"

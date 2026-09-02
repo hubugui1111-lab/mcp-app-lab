@@ -1,6 +1,6 @@
 # Protocol support
 
-This document describes MCP App Lab `v0.1.0`. “Supported” means implemented and covered by a test or fixture; it does not mean official certification.
+This document describes MCP App Lab `v0.1.1`. “Supported” means implemented and covered by a test or fixture; it does not mean official certification.
 
 ## Version lines
 

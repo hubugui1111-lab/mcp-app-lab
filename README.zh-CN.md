@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-38d9a9.svg)](LICENSE)
 [![Node.js 22.19+](https://img.shields.io/badge/node-%3E%3D22.19-5fa04e.svg)](package.json)
 
-[English](README.md) · [夹具说明](docs/fixtures.md) · [安全模型](docs/security-model.md) · [v0.1.0 发布说明](docs/release-notes-v0.1.0.md)
+[English](README.md) · [夹具说明](docs/fixtures.md) · [安全模型](docs/security-model.md) · [v0.1.1 发布说明](docs/release-notes-v0.1.1.md)
 
 ![MCP App Lab 在保持 App 和协议轨迹可见的同时，标出错误的 MCP Apps MIME 类型](assets/demo.png)
 
@@ -132,7 +132,7 @@ npm run demo:assets
 ## 当前边界
 
 - 本项目是独立开发工具，不是官方 MCP 认证套件。
-- v0.1.0 支持 stdio 与 Streamable HTTP，不支持旧式独立 SSE Transport 或 OAuth 流程。
+- v0.1.x 支持 stdio 与 Streamable HTTP，不支持旧式独立 SSE Transport 或 OAuth 流程。
 - Sampling、elicitation 和 Host 未声明的能力默认不可用。
 - 回放要求 App 请求与记录精确匹配，然后返回已保存响应；不会重连 Server，也不会模拟任意服务端状态。
 - 运行时策略夹具需要浏览器交互才会产生对应轨迹；无界面夹具门禁负责验证 Server 能连接且静态结果不漂移。
@@ -140,9 +140,10 @@ npm run demo:assets
 
 ## 项目状态
 
-`v0.1.0` 是首个公开 MVP。在 `v1.0.0` 前，协议适配层和公开 Node 导出仍可能调整；录制格式 `1.0` 独立版本化，并会在读取时校验。
+`v0.1.1` 是当前公开 MVP。在 `v1.0.0` 前，协议适配层和公开 Node 导出仍可能调整；录制格式 `1.0` 独立版本化，并会在读取时校验。
 
 - [更新记录](CHANGELOG.md)
+- [v0.1.1 发布说明](docs/release-notes-v0.1.1.md)
 - [v0.1.0 发布说明](docs/release-notes-v0.1.0.md)
 - [参与贡献](CONTRIBUTING.md)
 - [安全策略](SECURITY.md)

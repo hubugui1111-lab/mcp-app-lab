@@ -30,13 +30,13 @@ Do not claim production-grade isolation, official certification, universal clien
 
 ### Title
 
-MCP App Lab v0.1.0 — see the bridge failure, keep the evidence
+MCP App Lab v0.1.1 — see the bridge failure, keep the evidence
 
 ### Body
 
 MCP App Lab is an open-source local workbench for debugging interactive MCP Apps. It connects to real stdio or Streamable HTTP servers, renders the App through a distinct-origin double iframe, checks 13 resource/sandbox contracts, and records MCP, bridge, sandbox, and policy events in one trace.
 
-The first release includes deterministic recording/replay, nine adversarial fixtures, a machine-readable CLI gate, strict TypeScript and coverage thresholds, package-install smoke tests, and real Chromium visual regressions.
+The project includes deterministic recording/replay, nine adversarial fixtures, a machine-readable CLI gate, strict TypeScript and coverage thresholds, package-install smoke tests, real Chromium visual regressions, and bounded host/sandbox request rates.
 
 Try the included fixture with `npm ci && npm run demo`, then open `http://127.0.0.1:5178`.
 
@@ -52,7 +52,7 @@ Try the included fixture with `npm ci && npm run demo`, then open `http://127.0.
 
 于是做了 MCP App Lab。它能连接真实 stdio / Streamable HTTP Server，在两个不同本地源中渲染 App，同时显示 13 项检查和 MCP / bridge / sandbox / policy 四层轨迹。仓库还放了 9 个故意做坏的夹具，并用 Playwright 留下真实视觉回归。
 
-最小运行：`npm ci && npm run demo`。目前是 v0.1.0，重点是可复现和可审查，不是官方认证工具。欢迎拿自己的 App Server 试一下，尤其想知道你们最难定位的是哪一层。
+最小运行：`npm ci && npm run demo`。目前是 v0.1.1，重点是可复现和可审查，不是官方认证工具。欢迎拿自己的 App Server 试一下，尤其想知道你们最难定位的是哪一层。
 
 ### 小众软件 / Appinn
 

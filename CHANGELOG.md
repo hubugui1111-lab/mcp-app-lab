@@ -4,6 +4,12 @@ All notable changes to MCP App Lab are documented here. The project follows [Sem
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-03
+
+### Security
+
+- Rate-limit host and sandbox file responses to bound repeated local reads and satisfy the CodeQL missing-rate-limiting rule.
+
 ## [0.1.0] - 2026-09-03
 
 ### Added
@@ -17,5 +23,6 @@ All notable changes to MCP App Lab are documented here. The project follows [Sem
 - Nine adversarial fixture servers plus CLI, unit, UI, integration, E2E, and visual tests.
 - English and Chinese documentation, security model, CI, CodeQL, release automation, and launch material.
 
-[Unreleased]: https://github.com/hubugui1111-lab/mcp-app-lab/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/hubugui1111-lab/mcp-app-lab/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/hubugui1111-lab/mcp-app-lab/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/hubugui1111-lab/mcp-app-lab/releases/tag/v0.1.0

@@ -11,6 +11,7 @@ The trusted computing base is the installed MCP App Lab package, its Node proces
 ## Enforced boundaries
 
 - **Loopback listeners:** host and sandbox bind only to `127.0.0.1`.
+- **Bounded local reads:** both origins rate-limit requests per client to 600 per minute by default and return HTTP `429` after the limit.
 - **Two origins:** host UI and outer sandbox use different ports and therefore different origins.
 - **Nested sandbox:** App HTML runs in an inner iframe within the sandbox proxy; escape-capable sandbox tokens are not enabled.
 - **Message authentication:** bridge traffic must match the expected `Window`, exact origin, and JSON-RPC `2.0` marker.
@@ -33,6 +34,7 @@ The trusted computing base is the installed MCP App Lab package, its Node proces
 | Unavailable display mode                  | advertised-capability check and downgrade | `unsupported-capability` fixture        |
 | Credential leakage in config or recording | config rejection and recursive redaction  | config/recording unit tests             |
 | Confusing malformed App resource          | deterministic conformance errors          | `bad-uri` and `wrong-mime` fixtures     |
+| Repeated host or sandbox file reads       | per-origin request rate limiting          | dual-origin integration test            |
 | Malicious imported recording              | Zod schema validation; immutable replay   | recording unit tests                    |
 
 ## Credential handling

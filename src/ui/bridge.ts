@@ -187,7 +187,7 @@ export async function mountAppBridge(options: {
   };
   const bridge = new AppBridge(
     null,
-    { name: "mcp-app-lab", version: "0.1.0" },
+    { name: "mcp-app-lab", version: "0.1.1" },
     {
       openLinks: {},
       logging: {},
